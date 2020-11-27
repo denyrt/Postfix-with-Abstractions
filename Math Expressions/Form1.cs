@@ -37,7 +37,7 @@ namespace Math_Expressions
                 openTagLexeme,
                 closeTagLexeme,
                 new BinaryOperationLexeme<double>("+", 2, Add),
-                new BinaryOperationLexeme<double>("-", 3, Minus),
+                new UnaryOperationLexeme<double>("-", 3, Minus),
                 new BinaryOperationLexeme<double>("*", 4, Multiply),
                 new BinaryOperationLexeme<double>("/", 4, Divide),
                 new BinaryOperationLexeme<double>("^", 6, Pow),
@@ -55,9 +55,9 @@ namespace Math_Expressions
             return new OperantLexeme<double>(left.Value + rigth.Value);
         }
 
-        private IOperantLexeme<double> Minus(IOperantLexeme<double> left, IOperantLexeme<double> rigth)
+        private IOperantLexeme<double> Minus(IOperantLexeme<double> lexeme)
         {
-            return new OperantLexeme<double>(left.Value - rigth.Value);
+            return new OperantLexeme<double>(-lexeme.Value);
         }
 
         private IOperantLexeme<double> Multiply(IOperantLexeme<double> left, IOperantLexeme<double> rigth)

@@ -121,11 +121,11 @@ namespace Math_Expressions
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(15, 31);
+            this.label1.Location = new System.Drawing.Point(15, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(180, 132);
+            this.label1.Size = new System.Drawing.Size(180, 154);
             this.label1.TabIndex = 0;
-            this.label1.Text = "+\r\n-\r\n*\r\n/\r\ncos([expression])\r\nsin([expression])";
+            this.label1.Text = "+\r\n-\r\n*\r\n/\r\n^\r\ncos([expression])\r\nsin([expression])";
             // 
             // tabPageBooleanCalculator
             // 

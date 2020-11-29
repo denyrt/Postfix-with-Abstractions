@@ -2,7 +2,3 @@
 /Math Expressions/obj
 /Core/bin
 /Core/obj
-/Core/MathematicsWithUnknowns
-/Core/Contracts/IUnknownUnaryOperation.cs
-/Core/Contracts/IUnknownBinaryOperation.cs
-/Core/Contracts/IUnknownOperant.cs

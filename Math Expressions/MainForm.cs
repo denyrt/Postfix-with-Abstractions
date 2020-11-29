@@ -209,6 +209,15 @@ namespace Math_Expressions
             try
             {
                 var rs = parse.Parse(richTextBoxMathWithXInput.Text);
+
+                var list = new List<IOperationLexeme<double>>
+                {
+                    new BinaryOperationLexeme<double>("+", 2, (left, rigth) => new OperantLexeme<double>(left.Value + rigth.Value))
+                    {
+                        
+                    }
+                };
+
             }
             catch(Exception ex)
             {

@@ -3,13 +3,15 @@ using System;
 
 namespace Core.Lexemes
 {
-    public class BinaryOperationLexeme<T> : IBinaryOperationLexeme<T> where T : struct
+    public class BinaryOperationLexeme<T> : IBinaryOperationLexeme<T>, IUnknownBinaryOperation<T> where T : struct
     {
         public string Key { get; }
 
         public int Priority { get; }
 
-        public Func<IOperantLexeme<T>, IOperantLexeme<T>, IOperantLexeme<T>> Function { get; }               
+        public Func<IOperantLexeme<T>, IOperantLexeme<T>, IOperantLexeme<T>> Function { get; }        
+        public Func<IOperantLexeme<T>, IOperantLexeme<T>, IOperantLexeme<T>> FuncWithUnknown { get; set; }
+        public Func<IOperantLexeme<T>, IOperantLexeme<T>, bool> CanCalculateWithUnknown { get; set; }
 
         public BinaryOperationLexeme(string key, int priority, Func<IOperantLexeme<T>, IOperantLexeme<T>, IOperantLexeme<T>> function)
         {
@@ -22,6 +24,6 @@ namespace Core.Lexemes
             Key = key;
             Priority = priority;
             Function = function;
-        }
+        }        
     }
 }

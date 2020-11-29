@@ -4,24 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Core
+namespace Core.Booleans
 {
     public class LogicLexemeParser
     {
         public List<IOperationLexeme<bool>> OperationLexemes { get; }
 
-        public Dictionary<IOperationLexeme<bool>, IEnumerable<IOperationLexeme<bool>>> LexemesRelations { get; }
-
         public LogicLexemeParser()
         {
-            OperationLexemes = new List<IOperationLexeme<bool>>();
-            LexemesRelations = new Dictionary<IOperationLexeme<bool>, IEnumerable<IOperationLexeme<bool>>>();
+            OperationLexemes = new List<IOperationLexeme<bool>>();            
         }
 
         public LogicLexemeParser(IEnumerable<IOperationLexeme<bool>> operations)
         {
-            OperationLexemes = new List<IOperationLexeme<bool>>(operations);
-            LexemesRelations = new Dictionary<IOperationLexeme<bool>, IEnumerable<IOperationLexeme<bool>>>();
+            OperationLexemes = new List<IOperationLexeme<bool>>(operations);            
         }
 
         public IEnumerable<ILexeme<bool>> Parse(string inputString)
@@ -50,13 +46,13 @@ namespace Core
 
                 if (lexeme == null)
                 {
-                    var regex = new Regex(@"^(true|false)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                    var regex = new Regex(@"^(1|0)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
                     var result = regex.Match(inputString.Substring(index))?.Value;
 
                     if (string.IsNullOrEmpty(result))
                         throw new Exception("Syntax error.");
                     
-                    var value = bool.Parse(result);
+                    var value = Convert.ToBoolean(int.Parse(result));
                     lexeme = new OperantLexeme<bool>(value);
                     index += result.Length;
                 }

@@ -10,6 +10,11 @@ namespace Core.Matrices
             return new OperantLexeme<Matrix>(Matrix.Add(left.Value, rigth.Value));
         }
 
+        public static IOperantLexeme<Matrix> Minus(IOperantLexeme<Matrix> left, IOperantLexeme<Matrix> rigth)
+        {
+            return new OperantLexeme<Matrix>(Matrix.Minus(left.Value, rigth.Value));
+        }
+
         public static IOperantLexeme<Matrix> Minus(IOperantLexeme<Matrix> lexeme)
         {
             return new OperantLexeme<Matrix>(Matrix.Multiply(lexeme.Value, -1));

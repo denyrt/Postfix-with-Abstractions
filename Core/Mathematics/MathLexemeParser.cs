@@ -3,6 +3,7 @@ using Core.Lexemes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Core.Mathematics
@@ -31,7 +32,7 @@ namespace Core.Mathematics
                 ILexeme<double> lexeme = null;
                 
                 foreach (var operationLexeme in OperationLexemes)
-                {                    
+                {
                     if (operationLexeme.Key.Length > inputString.Length - index)
                         continue;
 
@@ -40,6 +41,19 @@ namespace Core.Mathematics
                     if (stringLexeme.StartsWith(operationLexeme.Key))
                     {
                         lexeme = operationLexeme;
+
+                        var last = lexemes.LastOrDefault();
+                        if (last == null
+                            || ((last is IBinaryOperationLexeme<double> || last is IOpenTagLexeme<double>)
+                            && (lexeme is IBinaryOperationLexeme<double>)))
+                        {
+                            var sameUnary = OperationLexemes.FirstOrDefault(op => op.Key == operationLexeme.Key && op is IUnaryOperationLexeme<double>);
+                            if (sameUnary != null)
+                            {
+                                lexeme = sameUnary;
+                            }
+                        }
+
                         index += operationLexeme.Key.Length;
                         break;
                     }

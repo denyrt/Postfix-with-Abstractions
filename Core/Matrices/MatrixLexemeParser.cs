@@ -47,6 +47,19 @@ namespace Core.Matrices
                     if (stringLexeme.StartsWith(operationLexeme.Key))
                     {
                         lexeme = operationLexeme;
+
+                        var last = lexemes.LastOrDefault();
+                        if (last == null
+                            || ((last is IBinaryOperationLexeme<Matrix> || last is IOpenTagLexeme<Matrix>)
+                            && (lexeme is IBinaryOperationLexeme<Matrix>)))
+                        {
+                            var sameUnary = OperationLexemes.FirstOrDefault(op => op.Key == operationLexeme.Key && op is IUnaryOperationLexeme<Matrix>);
+                            if (sameUnary != null)
+                            {
+                                lexeme = sameUnary;
+                            }
+                        }
+
                         index += operationLexeme.Key.Length;
                         break;
                     }

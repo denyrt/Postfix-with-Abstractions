@@ -7,26 +7,20 @@ namespace Core
 {
     public class PostfixExpression<T> where T : struct
     {
-        private readonly List<ILexeme<T>> _inputLexemes;
+        private readonly List<ILexeme<T>> _inputLexemes;       
 
-        public IBinaryOperationLexeme<T> DefaultOperation { get; } 
-
-        public PostfixExpression(IEnumerable<ILexeme<T>> inputLexemes, IBinaryOperationLexeme<T> defaultOperation)
+        public PostfixExpression(IEnumerable<ILexeme<T>> inputLexemes)
         {
             if (inputLexemes is null)
                 throw new ArgumentNullException(nameof(inputLexemes), "Value was null.");
-
-            if (defaultOperation is null)
-                throw new ArgumentNullException(nameof(defaultOperation), "Value was null");
-
-            DefaultOperation = defaultOperation;
+           
             _inputLexemes = inputLexemes.ToList();            
         }
 
         public Queue<ILexeme<T>> GetPostfixLexemes()
         {            
             var postfixLexemes = new Queue<ILexeme<T>>();
-            var tmpOperatios = new Stack<IOperationLexeme<T>>();
+            var tmpOperatios = new Stack<IOperationLexeme<T>>();            
 
             foreach (var lexeme in _inputLexemes)
             {
@@ -49,18 +43,21 @@ namespace Core
                 }
                 else if (lexeme is IOperationLexeme<T> operation)
                 {
-                    var firstOperation = tmpOperatios.FirstOrDefault();
+                    while (tmpOperatios.Count > 0)
+                    {
+                        var firstOperation = tmpOperatios.Pop();
 
-                    if (firstOperation is null || operation.Priority > firstOperation.Priority)
-                    {
-                        tmpOperatios.Push(operation);
+                        if (firstOperation.Priority >= operation.Priority)
+                        {
+                            postfixLexemes.Enqueue(firstOperation);
+                        }
+                        else
+                        {
+                            tmpOperatios.Push(firstOperation);
+                            break;                            
+                        }
                     }
-                    else
-                    {
-                        var op = tmpOperatios.Pop();
-                        postfixLexemes.Enqueue(op);                        
-                        tmpOperatios.Push(operation);
-                    }
+                    tmpOperatios.Push(operation);
                 }
                 else
                 {
@@ -68,9 +65,9 @@ namespace Core
                 }
             }
 
-            foreach (var op in tmpOperatios)
+            while (tmpOperatios.Count > 0)
             {
-                postfixLexemes.Enqueue(op);                
+                postfixLexemes.Enqueue(tmpOperatios.Pop());                
             }
             
             return postfixLexemes;            
@@ -80,6 +77,8 @@ namespace Core
         {
             var postfix = GetPostfixLexemes();
             var stackResult = new Stack<IOperantLexeme<T>>();
+
+            var str = string.Join("", postfix.Select(lex => lex is IOperantLexeme<T> op ? op.Value.ToString() : (lex as IOperationLexeme<T>).Key).ToArray());
 
             while (postfix.Count > 0)
             {
@@ -104,16 +103,7 @@ namespace Core
                     var result = unaryOperation.Function(value);
                     stackResult.Push(result);
                 }                
-            }
-
-            while (stackResult.Count > 1)
-            {
-                var rigth = stackResult.Pop();
-                var left = stackResult.Pop();
-
-                var result = DefaultOperation.Function(left, rigth);
-                stackResult.Push(result);
-            }
+            }            
 
             return stackResult.FirstOrDefault();
         }

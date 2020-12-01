@@ -3,14 +3,13 @@ using Core.Contracts;
 using Core.Lexemes;
 using Core.Booleans;
 using Core.Mathematics;
+using Core.Matrices;
 
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
 using System.Globalization;
-using Core.Matrices;
-using Core.MathematicsWithUnknowns;
 
 namespace Math_Expressions
 {
@@ -36,8 +35,7 @@ namespace Math_Expressions
             InitializeComponent();
             InitMath();
             InitLogic();
-            InitMatrix();
-        
+            InitMatrix();        
         }
 
         private string ReplaceConsts(string str)
@@ -60,9 +58,10 @@ namespace Math_Expressions
                 openTagLexeme,
                 closeTagLexeme,
                 new BinaryOperationLexeme<double>("+", 2, MathLexemeOperations.Add),
-                new UnaryOperationLexeme<double>("-", 3, MathLexemeOperations.Minus),
-                new BinaryOperationLexeme<double>("*", 4, MathLexemeOperations.Multiply),
-                new BinaryOperationLexeme<double>("/", 4, MathLexemeOperations.Divide),
+                new BinaryOperationLexeme<double>("-", 3, MathLexemeOperations.Minus),
+                new UnaryOperationLexeme<double>("-", 4, MathLexemeOperations.Minus),
+                new BinaryOperationLexeme<double>("*", 5, MathLexemeOperations.Multiply),
+                new BinaryOperationLexeme<double>("/", 5, MathLexemeOperations.Divide),
                 new BinaryOperationLexeme<double>("^", 6, MathLexemeOperations.Pow),
                 new UnaryOperationLexeme<double>("cos", 7, MathLexemeOperations.Cos),
                 new UnaryOperationLexeme<double>("sin", 7, MathLexemeOperations.Sin)
@@ -104,6 +103,7 @@ namespace Math_Expressions
                 openTagLexeme,
                 closeTagLexeme,
                 new BinaryOperationLexeme<Matrix>("+", 2, MatrixLexemeOperations.Add),
+                new BinaryOperationLexeme<Matrix>("-", 3, MatrixLexemeOperations.Minus),
                 new UnaryOperationLexeme<Matrix>("-", 3, MatrixLexemeOperations.Minus),
                 new BinaryOperationLexeme<Matrix>("*", 4, MatrixLexemeOperations.Multiply),
                 new UnaryOperationLexeme<Matrix>("inv", 5, MatrixLexemeOperations.Invariant)
@@ -135,8 +135,7 @@ namespace Math_Expressions
                         foreach (var pair in pairs) text = text.Replace(pair.Key, pair.Value);                        
 
                         var inputLemexes = _mathLexemeParser.Parse(text);
-                        var exp = new PostfixExpression<double>(inputLemexes,
-                            _mathOperations.FirstOrDefault(operation => operation.Key == "+") as IBinaryOperationLexeme<double>);
+                        var exp = new PostfixExpression<double>(inputLemexes);
                         var result = exp.Calculate();
                         var value = result.Value;
                         textBoxMathOutput.Text += value.ToString(CultureInfo.InvariantCulture) + Environment.NewLine;
@@ -146,8 +145,7 @@ namespace Math_Expressions
                 else
                 {
                     var inputLemexes = _mathLexemeParser.Parse(text);
-                    var exp = new PostfixExpression<double>(inputLemexes,
-                        _mathOperations.FirstOrDefault(operation => operation.Key == "+") as IBinaryOperationLexeme<double>);
+                    var exp = new PostfixExpression<double>(inputLemexes);
                     var result = exp.Calculate();
                     var value = result.Value;
                     textBoxMathOutput.Text = value.ToString(CultureInfo.InvariantCulture);
@@ -166,8 +164,7 @@ namespace Math_Expressions
             try
             {
                 var inputLemexes = _logicLexemeParser.Parse(text);
-                var exp = new PostfixExpression<bool>(inputLemexes,
-                    _logicOperations.FirstOrDefault(operation => operation.Key == "/\\") as IBinaryOperationLexeme<bool>);
+                var exp = new PostfixExpression<bool>(inputLemexes);
                 var result = exp.Calculate();
                 var value = result.Value;
                 textBox2.Text = value ? "1" : "0";
@@ -184,9 +181,8 @@ namespace Math_Expressions
 
             try
             {               
-                var inputLexemes = _matrixLexemeParser.Parse(text);
-                var defaultOperation = _matrixOperations.FirstOrDefault(operation => operation.Key == "+") as IBinaryOperationLexeme<Matrix>;
-                var exp = new PostfixExpression<Matrix>(inputLexemes, defaultOperation);
+                var inputLexemes = _matrixLexemeParser.Parse(text);                
+                var exp = new PostfixExpression<Matrix>(inputLexemes);
                 var result = exp.Calculate();
                 var value = result.Value;
                 textBox3.Text = value.ToString();
@@ -204,25 +200,8 @@ namespace Math_Expressions
 
         private void ButtonMathWithXCalculate_Click(object sender, EventArgs e)
         {
-            var parse = new MathWithUnknownLexemeParser(_mathOperations);
 
-            try
-            {
-                var rs = parse.Parse(richTextBoxMathWithXInput.Text);
-
-                var list = new List<IOperationLexeme<double>>
-                {
-                    new BinaryOperationLexeme<double>("+", 2, (left, rigth) => new OperantLexeme<double>(left.Value + rigth.Value))
-                    {
-                        
-                    }
-                };
-
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
     }
 }

@@ -3,6 +3,7 @@ using Core.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Core.Booleans
 {
@@ -39,6 +40,19 @@ namespace Core.Booleans
                     if (stringLexeme.StartsWith(operationLexeme.Key))
                     {
                         lexeme = operationLexeme;
+
+                        var last = lexemes.LastOrDefault();
+                        if (last == null
+                            || ((last is IBinaryOperationLexeme<bool> || last is IOpenTagLexeme<bool>)
+                            && (lexeme is IBinaryOperationLexeme<bool>)))
+                        {
+                            var sameUnary = OperationLexemes.FirstOrDefault(op => op.Key == operationLexeme.Key && op is IUnaryOperationLexeme<bool>);
+                            if (sameUnary != null)
+                            {
+                                lexeme = sameUnary;
+                            }
+                        }
+
                         index += operationLexeme.Key.Length;
                         break;
                     }

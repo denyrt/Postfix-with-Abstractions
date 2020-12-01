@@ -83,23 +83,23 @@ namespace Math_Expressions
             this.richTextBoxMathInput.Location = new System.Drawing.Point(8, 6);
             this.richTextBoxMathInput.Margin = new System.Windows.Forms.Padding(6);
             this.richTextBoxMathInput.Name = "richTextBoxMathInput";
-            this.richTextBoxMathInput.Size = new System.Drawing.Size(778, 131);
+            this.richTextBoxMathInput.Size = new System.Drawing.Size(778, 116);
             this.richTextBoxMathInput.TabIndex = 0;
-            this.richTextBoxMathInput.Text = "1+2";
+            this.richTextBoxMathInput.Text = "-1+2-cos(1)";
             // 
             // textBoxMathOutput
             // 
             this.textBoxMathOutput.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxMathOutput.Location = new System.Drawing.Point(10, 181);
+            this.textBoxMathOutput.Location = new System.Drawing.Point(10, 166);
             this.textBoxMathOutput.Multiline = true;
             this.textBoxMathOutput.Name = "textBoxMathOutput";
             this.textBoxMathOutput.ReadOnly = true;
-            this.textBoxMathOutput.Size = new System.Drawing.Size(776, 70);
+            this.textBoxMathOutput.Size = new System.Drawing.Size(776, 85);
             this.textBoxMathOutput.TabIndex = 1;
             // 
             // buttonCalculateMath
             // 
-            this.buttonCalculateMath.Location = new System.Drawing.Point(341, 146);
+            this.buttonCalculateMath.Location = new System.Drawing.Point(341, 131);
             this.buttonCalculateMath.Name = "buttonCalculateMath";
             this.buttonCalculateMath.Size = new System.Drawing.Size(94, 29);
             this.buttonCalculateMath.TabIndex = 2;
@@ -139,7 +139,7 @@ namespace Math_Expressions
             // checkBoxUseParams
             // 
             this.checkBoxUseParams.AutoSize = true;
-            this.checkBoxUseParams.Location = new System.Drawing.Point(641, 149);
+            this.checkBoxUseParams.Location = new System.Drawing.Point(640, 131);
             this.checkBoxUseParams.Name = "checkBoxUseParams";
             this.checkBoxUseParams.Size = new System.Drawing.Size(134, 24);
             this.checkBoxUseParams.TabIndex = 0;
@@ -240,9 +240,9 @@ namespace Math_Expressions
             // 
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox2.Location = new System.Drawing.Point(7, 218);
+            this.groupBox2.Location = new System.Drawing.Point(7, 234);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(778, 196);
+            this.groupBox2.Size = new System.Drawing.Size(778, 180);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Allowed Operations";
@@ -281,7 +281,7 @@ namespace Math_Expressions
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(349, 142);
+            this.button2.Location = new System.Drawing.Point(348, 142);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 6;
@@ -354,7 +354,7 @@ namespace Math_Expressions
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(778, 131);
             this.richTextBox3.TabIndex = 1;
-            this.richTextBox3.Text = "";
+            this.richTextBox3.Text = "inv(([5 3; 3 4] - [2 3; 4 5]) * [5 4; -7 4])";
             // 
             // tabPage1
             // 

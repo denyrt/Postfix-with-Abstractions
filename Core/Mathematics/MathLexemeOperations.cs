@@ -11,6 +11,11 @@ namespace Core.Mathematics
             return new OperantLexeme<double>(left.Value + rigth.Value);
         }
 
+        public static IOperantLexeme<double> Minus(IOperantLexeme<double> left, IOperantLexeme<double> rigth)
+        {
+            return new OperantLexeme<double>(left.Value - rigth.Value);
+        }
+
         public static IOperantLexeme<double> Minus(IOperantLexeme<double> lexeme)
         {            
             return new OperantLexeme<double>(-lexeme.Value);

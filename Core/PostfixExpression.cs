@@ -78,7 +78,7 @@ namespace Core
             var postfix = GetPostfixLexemes();
             var stackResult = new Stack<IOperantLexeme<T>>();
 
-            var str = string.Join("", postfix.Select(lex => lex is IOperantLexeme<T> op ? op.Value.ToString() : (lex as IOperationLexeme<T>).Key).ToArray());
+            //var str = string.Join("", postfix.Select(lex => lex is IOperantLexeme<T> op ? op.Value.ToString() : (lex as IOperationLexeme<T>).Key).ToArray());
 
             while (postfix.Count > 0)
             {
@@ -105,7 +105,7 @@ namespace Core
                 }                
             }            
 
-            return stackResult.FirstOrDefault();
+            return stackResult.Pop();
         }
     }
 }
